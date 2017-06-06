@@ -1,0 +1,17 @@
+
+header .container {
+	background-color: lightblue;
+}
+
+body ,html, p, h1,h2,h3,h4 {
+	font-family: 'Roboto Slab', serif;
+
+}
+
+section .container {
+	background-color:yellow;
+}
+
+footer .container {
+	background-color: gray
+}
