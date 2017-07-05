@@ -1,14 +1,18 @@
 <?php
 session_start();
 require_once('config.php');
+
 if(isset($_POST) & !empty($_POST)){
 	$username = mysqli_real_escape_string($connection, $_POST['username']);
 	$password = md5($_POST['password']);
 
-	$sql = "SELECT * FROM `login` WHERE username='$username' AND password='$password'";
+  // MySQL Scripts
+	$sql = "SELECT * FROM `users` WHERE username='$username' AND password='$password'";
 	$result = mysqli_query($connection, $sql);
 	$count = mysqli_num_rows($result);
-	if($count == 1){
+
+	// Validation
+		if($count == 1){
 		$_SESSION['username'] = $username;
 	}else{
 		$fmsg = "Invalid Username/Password";
@@ -16,37 +20,88 @@ if(isset($_POST) & !empty($_POST)){
 }
 if(isset($_SESSION['username'])){
 	$smsg = "User already logged in";
+	echo "<script> window.location.assign('welcome.php'); </script>";
+	exit();
 }
-
 ?>
+
+<!-- HTML Starts -->
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Mindivanli Software Solutions</title>
-	<!-- Bootstrap Core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<head>
+		<!--  Meta Tag -->
+	  <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	  <title>Ömer Mindivanli AB</title>
+	  <base target="_self">
+	  <meta name="description" content="" />
+	  <meta name="google" value="notranslate">
 
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+		<!-- Google Font API's -->
+	  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+	  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 
-	<link rel="stylesheet" type="text/css" href="css/form.css">
-</head>
-<body style="background-image: url("img/12.jpg")">
-	<div class="container">
-      <?php if(isset($smsg)){ ?><div class="alert alert-success" role="alert"> <?php echo $smsg; ?> </div><?php } ?>
-      <?php if(isset($fmsg)){ ?><div class="alert alert-danger" role="alert"> <?php echo $fmsg; ?> </div><?php } ?>
-      <form class="form-signin" method="POST">
-        <h2 class="form-signin-heading">Login</h2>
-        <div class="input-group">
-		  <span class="input-group-addon" id="basic-addon1">@</span>
-		  <input type="text" name="username" class="form-control" placeholder="Username" required>
-		</div>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
-        <a class="btn btn-lg btn-primary btn-block" href="register.php">Register</a>
-        <a class="btn btn-lg btn-primary btn-block" href="index.php">Logout</a>
-      </form>
-</div>
-</body>
+		<!-- Bootstrap References for CSS  -->
+	  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" />
+
+		<!-- MY CSS -->
+    <link href="font.css" rel="stylesheet">
+	  <style type="text/css"></style>
+  </head>
+
+  <body>
+  <div class="container py-4">
+    <div class="row">
+      <div class="col-md-12">
+        <h2 class="text-center mb-4">Ömer Mindivanli AB</h2>
+
+        <hr class="mb-4">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                    <span class="anchor" id="formLogin"></span>
+
+                   <div class="card card-outline-secondary">
+                       <div class="card-header">
+                           <h3 class="mb-0">Login</h3>
+                       </div>
+                       <div class="card-block">
+
+                           <form class="form" method="POST" role="form" autocomplete="off">
+                               <div class="form-group">
+                                   <input type="text" class= "form-control" name="username" id="name" placeholder="Username" required="">
+                                   <label for="inputPassword" class="sr-only">Password</label>
+                               </div>
+
+                               <div class="form-group">
+                                  <label for="inputPassword" class="sr-only">Password</label>
+                                   <input placeholder="Password" type="password" class="form-control" name="password" id="inputPassword" required="" autocomplete="new-password">
+                               </div>
+
+                               <div class="form-check small">
+                                   <label class="form-check-label">
+                                       <input type="checkbox" class="form-check-input"> <span>Remember me on this computer</span>
+                                   </label>
+                               </div>
+                               <button type="submit" class="btn btn-success btn-lg float-right">Login</button>
+                           </form>
+                       </div>
+                   </div>
+                   <!-- Login -->
+		<div class="container">
+			<h1></h1>
+	  </div>
+
+		<!-- Footer  -->
+		<div class="mastfoot">
+	    <div class="inner">
+	        <p class="float-right"><a href="register.php"> Back Register</a></p>
+	        <p>&copy; 2017 Ömer Mindivanli AB &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+    </div>
+
+		<!-- jQuery library -->
+	  <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	  <script src="//cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js"></script>
+	  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+
+	</body>
 </html>
